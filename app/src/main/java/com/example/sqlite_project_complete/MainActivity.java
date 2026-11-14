@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +16,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import Models.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
+
+    // ---------- Carrusel sencillo ----------
+    // Las 3 imágenes están en res/drawable (img1.png, img2.png, img3.png)
+    private final int[] imagenes = {R.drawable.img1, R.drawable.img2, R.drawable.img3};
+    private int indice = 0;          // imagen que se está mostrando
+    private ImageView ivLogo;
+
+    // Handler: programa una tarea para ejecutarla después de un tiempo
+    private final Handler handler = new Handler(Looper.getMainLooper());
+
+    // Tarea: pasa a la siguiente imagen y se repite cada 3 segundos
+    private final Runnable carrusel = new Runnable() {
+        @Override
+        public void run() {
+            indice = (indice + 1) % imagenes.length;   // 0 -> 1 -> 2 -> 0 ...
+            ivLogo.setImageResource(imagenes[indice]);
+            handler.postDelayed(this, 3000);           // 3000 ms = 3 segundos
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +44,13 @@ public class MainActivity extends AppCompatActivity {
         EditText etUser = findViewById(R.id.etUser);
         EditText etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
+        ivLogo = findViewById(R.id.ivLogo);
         DatabaseHelper helper = new DatabaseHelper(this);
 
+        // Muestra la primera imagen
+        ivLogo.setImageResource(imagenes[0]);
 
-        // LOGIN:Desde la Base de datos
-
+        // LOGIN: desde la base de datos
         btnLogin.setOnClickListener(v -> {
 
             String user = etUser.getText().toString().trim();
@@ -41,12 +65,24 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(this, Home_act.class);
                 startActivity(i);
-
-
             } else {
                 Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
             }
             c.close();
         });
+    }
+
+    // Inicia el carrusel cuando la pantalla se ve
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.postDelayed(carrusel, 3000);
+    }
+
+    // Detiene el carrusel cuando la pantalla deja de verse
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(carrusel);
     }
 }

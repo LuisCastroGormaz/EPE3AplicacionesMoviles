@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2F2F7"
+    android:background="#E8F5E9"
     android:fillViewport="true">
 
     <LinearLayout
@@ -17,19 +17,19 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Gestión de Usuarios"
-            android:textColor="#1F1F1F"
+            android:layout_marginBottom="20dp"
+            android:text="Gestión de Cancha"
+            android:textColor="#1B5E20"
             android:textSize="26sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"/>
+            android:textStyle="bold" />
 
-        <!-- Tarjeta del formulario -->
+        <!-- ========== CARD: JUGADOR ========== -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="16dp"
             app:cardElevation="6dp"
-            app:cardBackgroundColor="#FFFFFF"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
@@ -41,95 +41,467 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Añadir / Eliminar"
-                    android:textColor="#3F51B5"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="12dp"/>
+                    android:layout_marginBottom="12dp"
+                    android:text="Jugador"
+                    android:textColor="#2E7D32"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/etNewUser"
+                    android:id="@+id/etNombreJugador"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Usuario"
-                    android:inputType="text"
-                    android:padding="12dp"
-                    android:background="#F0F0F5"/>
+                    android:layout_marginTop="0dp"
+                    android:background="#F0F0F5"
+                    android:hint="Nombre del jugador"
+                    android:inputType="textPersonName"
+                    android:padding="12dp" />
 
                 <EditText
-                    android:id="@+id/etNewPass"
+                    android:id="@+id/etPosicion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Contraseña"
-                    android:inputType="textPassword"
-                    android:padding="12dp"
-                    android:background="#F0F0F5"/>
+                    android:background="#F0F0F5"
+                    android:hint="Posición (portero, defensa...)"
+                    android:inputType="text"
+                    android:padding="12dp" />
+
+                <EditText
+                    android:id="@+id/etNumero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#F0F0F5"
+                    android:hint="Número de camiseta"
+                    android:inputType="number"
+                    android:padding="12dp" />
+
+                <Spinner
+                    android:id="@+id/spEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#F0F0F5" />
 
                 <Button
-                    android:id="@+id/btnAdd"
+                    android:id="@+id/btnAddJugador"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Añadir usuario"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#4CAF50"/>
+                    android:backgroundTint="#2E7D32"
+                    android:text="Añadir jugador"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/etIdJugador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="#F0F0F5"
+                    android:hint="ID del jugador a eliminar"
+                    android:inputType="number"
+                    android:padding="12dp" />
 
                 <Button
-                    android:id="@+id/btnDelete"
+                    android:id="@+id/btnDeleteJugador"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Eliminar usuario"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#E53935"/>
+                    android:backgroundTint="#E53935"
+                    android:text="Eliminar jugador"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnShowJugador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#1B5E20"
+                    android:text="Mostrar jugadors"
+                    android:textColor="#FFFFFF" />
+
+                <!-- Aquí se muestran los datos guardados de Jugador -->
+                <TextView
+                    android:id="@+id/tvListaJugador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="monospace"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Aún no hay datos cargados"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Botón mostrar -->
-        <Button
-            android:id="@+id/btnShow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Mostrar usuarios"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#3F51B5"/>
-
-        <!-- Tarjeta del listado -->
+        <!-- ========== CARD: EQUIPO ========== -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
             app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Listado"
-                    android:textColor="#3F51B5"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="12dp"
+                    android:text="Equipo"
+                    android:textColor="#2E7D32"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tvList"
+                <EditText
+                    android:id="@+id/etNombreEquipo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Aún no se han cargado usuarios"
-                    android:textColor="#333333"
-                    android:textSize="14sp"
+                    android:layout_marginTop="0dp"
+                    android:background="#F0F0F5"
+                    android:hint="Nombre del equipo"
+                    android:inputType="text"
+                    android:padding="12dp" />
+
+                <Button
+                    android:id="@+id/btnAddEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#2E7D32"
+                    android:text="Añadir equipo"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/etIdEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="#F0F0F5"
+                    android:hint="ID del equipo a eliminar"
+                    android:inputType="number"
+                    android:padding="12dp" />
+
+                <Button
+                    android:id="@+id/btnDeleteEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#E53935"
+                    android:text="Eliminar equipo"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnShowEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#1B5E20"
+                    android:text="Mostrar equipos"
+                    android:textColor="#FFFFFF" />
+
+                <!-- Aquí se muestran los datos guardados de Equipo -->
+                <TextView
+                    android:id="@+id/tvListaEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
                     android:fontFamily="monospace"
-                    android:lineSpacingExtra="4dp"/>
+                    android:lineSpacingExtra="4dp"
+                    android:text="Aún no hay datos cargados"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ========== CARD: ENTRENADOR ========== -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="Entrenador"
+                    android:textColor="#2E7D32"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etNombreEntrenador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:background="#F0F0F5"
+                    android:hint="Nombre del entrenador"
+                    android:inputType="textPersonName"
+                    android:padding="12dp" />
+
+                <Button
+                    android:id="@+id/btnAddEntrenador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#2E7D32"
+                    android:text="Añadir entrenador"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/etIdEntrenador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="#F0F0F5"
+                    android:hint="ID del entrenador a eliminar"
+                    android:inputType="number"
+                    android:padding="12dp" />
+
+                <Button
+                    android:id="@+id/btnDeleteEntrenador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#E53935"
+                    android:text="Eliminar entrenador"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnShowEntrenador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#1B5E20"
+                    android:text="Mostrar entrenadors"
+                    android:textColor="#FFFFFF" />
+
+                <!-- Aquí se muestran los datos guardados de Entrenador -->
+                <TextView
+                    android:id="@+id/tvListaEntrenador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="monospace"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Aún no hay datos cargados"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ========== CARD: ESTADIO ========== -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="Estadio"
+                    android:textColor="#2E7D32"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etNombreEstadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:background="#F0F0F5"
+                    android:hint="Nombre del estadio"
+                    android:inputType="text"
+                    android:padding="12dp" />
+
+                <EditText
+                    android:id="@+id/etCiudadEstadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#F0F0F5"
+                    android:hint="Ciudad"
+                    android:inputType="text"
+                    android:padding="12dp" />
+
+                <Button
+                    android:id="@+id/btnAddEstadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#2E7D32"
+                    android:text="Añadir estadio"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/etIdEstadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="#F0F0F5"
+                    android:hint="ID del estadio a eliminar"
+                    android:inputType="number"
+                    android:padding="12dp" />
+
+                <Button
+                    android:id="@+id/btnDeleteEstadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#E53935"
+                    android:text="Eliminar estadio"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnShowEstadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#1B5E20"
+                    android:text="Mostrar estadios"
+                    android:textColor="#FFFFFF" />
+
+                <!-- Aquí se muestran los datos guardados de Estadio -->
+                <TextView
+                    android:id="@+id/tvListaEstadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="monospace"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Aún no hay datos cargados"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ========== CARD: PARTIDO ========== -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="Partido"
+                    android:textColor="#2E7D32"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etFechaPartido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:background="#F0F0F5"
+                    android:hint="Fecha (dd/mm/aaaa)"
+                    android:inputType="date"
+                    android:padding="12dp" />
+
+                <EditText
+                    android:id="@+id/etEquipoLocal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#F0F0F5"
+                    android:hint="Equipo local"
+                    android:inputType="text"
+                    android:padding="12dp" />
+
+                <EditText
+                    android:id="@+id/etEquipoVisita"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#F0F0F5"
+                    android:hint="Equipo visita"
+                    android:inputType="text"
+                    android:padding="12dp" />
+
+                <Button
+                    android:id="@+id/btnAddPartido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#2E7D32"
+                    android:text="Añadir partido"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/etIdPartido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="#F0F0F5"
+                    android:hint="ID del partido a eliminar"
+                    android:inputType="number"
+                    android:padding="12dp" />
+
+                <Button
+                    android:id="@+id/btnDeletePartido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#E53935"
+                    android:text="Eliminar partido"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnShowPartido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#1B5E20"
+                    android:text="Mostrar partidos"
+                    android:textColor="#FFFFFF" />
+
+                <!-- Aquí se muestran los datos guardados de Partido -->
+                <TextView
+                    android:id="@+id/tvListaPartido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="monospace"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Aún no hay datos cargados"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
