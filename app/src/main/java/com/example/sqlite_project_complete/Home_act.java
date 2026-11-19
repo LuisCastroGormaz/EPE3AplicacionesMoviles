@@ -353,4 +353,10 @@ public class Home_act extends AppCompatActivity {
     private void toast(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    protected void onDestroy() {
+        helper.close();
+        super.onDestroy();
+    }
 }

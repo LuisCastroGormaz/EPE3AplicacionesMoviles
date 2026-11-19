@@ -1,8 +1,6 @@
 package com.example.sqlite_project_complete;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,9 +11,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import Models.DatabaseHelper;
-
 public class MainActivity extends AppCompatActivity {
+
+    private static final String USUARIO_DEMO = "demo";
+    private static final String CLAVE_DEMO = "demo123";
 
     // ---------- Carrusel sencillo ----------
     // Las 3 imágenes están en res/drawable (img1.png, img2.png, img3.png)
@@ -45,30 +44,27 @@ public class MainActivity extends AppCompatActivity {
         EditText etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
         ivLogo = findViewById(R.id.ivLogo);
-        DatabaseHelper helper = new DatabaseHelper(this);
 
         // Muestra la primera imagen
         ivLogo.setImageResource(imagenes[0]);
 
-        // LOGIN: desde la base de datos
         btnLogin.setOnClickListener(v -> {
 
             String user = etUser.getText().toString().trim();
             String pass = etPassword.getText().toString().trim();
 
-            SQLiteDatabase db = helper.getReadableDatabase();
-            Cursor c = db.rawQuery(
-                    "SELECT id FROM users WHERE username=? AND password=?",
-                    new String[]{user, pass});
+            if (user.isEmpty() || pass.isEmpty()) {
+                Toast.makeText(this, R.string.completar_credenciales, Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            if (c.moveToFirst()) {
+            if (USUARIO_DEMO.equals(user) && CLAVE_DEMO.equals(pass)) {
                 Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(this, Home_act.class);
                 startActivity(i);
             } else {
                 Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
             }
-            c.close();
         });
     }
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SQLite_project_complete</string>
+    <string name="completar_credenciales">Completa el usuario y la contraseña</string>
 </resources>
