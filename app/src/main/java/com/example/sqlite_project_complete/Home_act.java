@@ -23,9 +23,9 @@ public class Home_act extends AppCompatActivity {
 
     DatabaseHelper helper;
     Spinner spEquipo;
-    List<Equipo> equipos = new ArrayList<>();   // equipos que muestra el Spinner
+    List<Equipo> equipos = new ArrayList<>();
 
-    // TextView donde se muestran los datos de cada clase
+
     TextView tvJugadores, tvEquipos, tvEntrenadores, tvEstadios, tvPartidos;
 
     @Override
@@ -49,22 +49,28 @@ public class Home_act extends AppCompatActivity {
         configurarEntrenador();
         configurarEstadio();
         configurarPartido();
+
+        mostrarJugadores();
+        mostrarEquipos();
+        mostrarEntrenadores();
+        mostrarEstadios();
+        mostrarPartidos();
     }
 
-    // ===================== JUGADOR =====================
+    // JUGADOR
     private void configurarJugador() {
         EditText etNombre = findViewById(R.id.etNombreJugador);
         EditText etPosicion = findViewById(R.id.etPosicion);
         EditText etNumero = findViewById(R.id.etNumero);
         EditText etId = findViewById(R.id.etIdJugador);
 
-        // ---------- AÑADIR ----------
+        // AÑADIR
         findViewById(R.id.btnAddJugador).setOnClickListener(v -> {
             String nombre = etNombre.getText().toString().trim();
             String posicion = etPosicion.getText().toString().trim();
             int numero = leerNumero(etNumero);
 
-            // Valida que los datos obligatorios estén completos
+
             if (nombre.isEmpty() || posicion.isEmpty() || etNumero.getText().toString().trim().isEmpty()) {
                 toast("Completa nombre, posición y número");
                 return;
@@ -92,7 +98,7 @@ public class Home_act extends AppCompatActivity {
             }
         });
 
-        // ---------- ELIMINAR ----------
+        //  ELIMINAR
         findViewById(R.id.btnDeleteJugador).setOnClickListener(v -> {
             int id = leerNumero(etId);
             if (id < 0) {
@@ -108,7 +114,7 @@ public class Home_act extends AppCompatActivity {
             }
         });
 
-        // ---------- MOSTRAR ----------
+        //  MOSTRAR
         findViewById(R.id.btnShowJugador).setOnClickListener(v -> mostrarJugadores());
     }
 
@@ -125,7 +131,7 @@ public class Home_act extends AppCompatActivity {
         tvJugadores.setText(sb.length() == 0 ? "No hay jugadores registrados" : sb.toString());
     }
 
-    // ===================== EQUIPO =====================
+    //  EQUIPO
     private void configurarEquipo() {
         EditText etNombre = findViewById(R.id.etNombreEquipo);
         EditText etId = findViewById(R.id.etIdEquipo);
@@ -139,7 +145,7 @@ public class Home_act extends AppCompatActivity {
             if (helper.insertarEquipo(new Equipo(0, nombre)) != -1) {
                 toast("Equipo añadido correctamente");
                 etNombre.setText("");
-                cargarSpinner();     // actualiza el menú de equipos del jugador
+                cargarSpinner();
                 mostrarEquipos();
             } else {
                 toast("Error al guardar el equipo");
@@ -157,7 +163,7 @@ public class Home_act extends AppCompatActivity {
                 etId.setText("");
                 cargarSpinner();
                 mostrarEquipos();
-                mostrarJugadores();  // sus jugadores también se borraron
+                mostrarJugadores();
             } else {
                 toast("No existe un equipo con ese ID");
             }
@@ -174,7 +180,7 @@ public class Home_act extends AppCompatActivity {
         tvEquipos.setText(sb.length() == 0 ? "No hay equipos registrados" : sb.toString());
     }
 
-    // ===================== ENTRENADOR =====================
+    //  ENTRENADOR
     private void configurarEntrenador() {
         EditText etNombre = findViewById(R.id.etNombreEntrenador);
         EditText etId = findViewById(R.id.etIdEntrenador);
@@ -220,7 +226,7 @@ public class Home_act extends AppCompatActivity {
         tvEntrenadores.setText(sb.length() == 0 ? "No hay entrenadores registrados" : sb.toString());
     }
 
-    // ===================== ESTADIO =====================
+    //  ESTADIO
     private void configurarEstadio() {
         EditText etNombre = findViewById(R.id.etNombreEstadio);
         EditText etCiudad = findViewById(R.id.etCiudadEstadio);
@@ -272,7 +278,7 @@ public class Home_act extends AppCompatActivity {
         tvEstadios.setText(sb.length() == 0 ? "No hay estadios registrados" : sb.toString());
     }
 
-    // ===================== PARTIDO =====================
+    //  PARTIDO
     private void configurarPartido() {
         EditText etFecha = findViewById(R.id.etFechaPartido);
         EditText etLocal = findViewById(R.id.etEquipoLocal);
@@ -328,9 +334,9 @@ public class Home_act extends AppCompatActivity {
         tvPartidos.setText(sb.length() == 0 ? "No hay partidos registrados" : sb.toString());
     }
 
-    // ===================== AUXILIARES =====================
+    //  AUXILIARES
 
-    // Llena el Spinner con los equipos guardados en la base
+    //
     private void cargarSpinner() {
         equipos = helper.listarEquipos();
         ArrayAdapter<Equipo> adapter = new ArrayAdapter<>(this,
@@ -339,7 +345,7 @@ public class Home_act extends AppCompatActivity {
         spEquipo.setAdapter(adapter);
     }
 
-    // Lee un número de un EditText; devuelve -1 si está vacío o es inválido
+
     private int leerNumero(EditText et) {
         String t = et.getText().toString().trim();
         if (t.isEmpty()) return -1;

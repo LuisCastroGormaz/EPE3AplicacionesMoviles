@@ -13,25 +13,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String USUARIO_DEMO = "demo";
-    private static final String CLAVE_DEMO = "demo123";
+    private static final String USUARIO_DEMO = "admin";
+    private static final String CLAVE_DEMO = "admin123";
 
-    // ---------- Carrusel sencillo ----------
-    // Las 3 imágenes están en res/drawable (img1.png, img2.png, img3.png)
+
+    // Las 3 imágenes
     private final int[] imagenes = {R.drawable.img1, R.drawable.img2, R.drawable.img3};
-    private int indice = 0;          // imagen que se está mostrando
+    private int indice = 0;
     private ImageView ivLogo;
 
-    // Handler: programa una tarea para ejecutarla después de un tiempo
+
     private final Handler handler = new Handler(Looper.getMainLooper());
 
-    // Tarea: pasa a la siguiente imagen y se repite cada 3 segundos
+
     private final Runnable carrusel = new Runnable() {
         @Override
         public void run() {
-            indice = (indice + 1) % imagenes.length;   // 0 -> 1 -> 2 -> 0 ...
+            indice = (indice + 1) % imagenes.length;
             ivLogo.setImageResource(imagenes[indice]);
-            handler.postDelayed(this, 3000);           // 3000 ms = 3 segundos
+            handler.postDelayed(this, 3500);
         }
     };
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.btnLogin);
         ivLogo = findViewById(R.id.ivLogo);
 
-        // Muestra la primera imagen
+
         ivLogo.setImageResource(imagenes[0]);
 
         btnLogin.setOnClickListener(v -> {
@@ -68,14 +68,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Inicia el carrusel cuando la pantalla se ve
+
     @Override
     protected void onResume() {
         super.onResume();
         handler.postDelayed(carrusel, 3000);
     }
 
-    // Detiene el carrusel cuando la pantalla deja de verse
+
     @Override
     protected void onPause() {
         super.onPause();

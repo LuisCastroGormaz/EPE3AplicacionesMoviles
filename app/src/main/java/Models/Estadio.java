@@ -1,6 +1,5 @@
 package Models;
 
-// Modelo: representa a un estadio
 public class Estadio {
 
     private int id;

@@ -1,6 +1,5 @@
 package Models;
 
-// Modelo: representa a un partido (la fecha es un atributo más)
 public class Partido {
 
     private int id;
